@@ -1,3 +1,4 @@
-# media/products/
+media/products/
+db.sqlite3
 */__pycache__
 **/__pycache__
