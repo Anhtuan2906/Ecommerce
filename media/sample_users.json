@@ -1,0 +1,191 @@
+[
+    {
+        "id": 0,
+        "name": "Admin",
+        "email": "admin@gmail.com",
+        "username": "admin@gmail.com",
+        "password": "admin1234",
+        "is_staff": true,
+        "is_superuser": true
+    },
+    {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john_doe@gmail.com",
+        "username": "john_doe@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 2,
+        "name": "Jane Smith",
+        "email": "jane_smith@gmail.com",
+        "username": "jane_smith@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 3,
+        "name": "Michael Johnson",
+        "email": "michael_johnson@gmail.com",
+        "username": "michael_johnson@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 4,
+        "name": "Emily Davis",
+        "email": "emily_davis@gmail.com",
+        "username": "emily_davis@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 5,
+        "name": "David Wilson",
+        "email": "david_wilson@gmail.com",
+        "username": "david_wilson@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 6,
+        "name": "Sarah Anderson",
+        "email": "sarah_anderson@gmail.com",
+        "username": "sarah_anderson@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 7,
+        "name": "Christopher Martinez",
+        "email": "christopher_martinez@gmail.com",
+        "username": "christopher_martinez@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 8,
+        "name": "Jessica Taylor",
+        "email": "jessica_taylor@gmail.com",
+        "username": "jessica_taylor@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 9,
+        "name": "Matthew Thomas",
+        "email": "matthew_thomas@gmail.com",
+        "username": "matthew_thomas@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 10,
+        "name": "Ashley Hernandez",
+        "email": "ashley_hernandez@gmail.com",
+        "username": "ashley_hernandez@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 11,
+        "name": "Daniel Moore",
+        "email": "daniel_moore@gmail.com",
+        "username": "daniel_moore@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 12,
+        "name": "Lauren Jackson",
+        "email": "lauren_jackson@gmail.com",
+        "username": "lauren_jackson@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 13,
+        "name": "Andrew Thompson",
+        "email": "andrew_thompson@gmail.com",
+        "username": "andrew_thompson@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 14,
+        "name": "Olivia White",
+        "email": "olivia_white@gmail.com",
+        "username": "olivia_white@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 15,
+        "name": "James Lee",
+        "email": "james_lee@gmail.com",
+        "username": "james_lee@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 16,
+        "name": "Sophia Harris",
+        "email": "sophia_harris@gmail.com",
+        "username": "sophia_harris@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 17,
+        "name": "Joseph Clark",
+        "email": "joseph_clark@gmail.com",
+        "username": "joseph_clark@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 18,
+        "name": "Mia Lewis",
+        "email": "mia_lewis@gmail.com",
+        "username": "mia_lewis@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 19,
+        "name": "Benjamin Walker",
+        "email": "benjamin_walker@gmail.com",
+        "username": "benjamin_walker@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    },
+    {
+        "id": 20,
+        "name": "Ava Hall",
+        "email": "ava_hall@gmail.com",
+        "username": "ava_hall@gmail.com",
+        "password": "admin1234",
+        "is_staff": false,
+        "is_superuser": false
+    }
+]
