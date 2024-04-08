@@ -1,0 +1,6 @@
+numpy
+pandas
+django
+django-bootstrap-v5
+django-widget-tweaks
+django-resized

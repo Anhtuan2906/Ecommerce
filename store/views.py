@@ -1,119 +1,43 @@
-from django.shortcuts import render
-from django.http import JsonResponse
-import json
-import datetime
+from django.shortcuts import render, redirect
+
+from ecommerce.utils import require_login
 from .models import *
-from .utils import cookieCart, cartData, guestOrder
+from .forms import ProductForm
 
-def store(request):
-    data = cartData(request)
 
-    cartItems = data['cartItems']
-    order = data['order']
-    items = data['items']
-
+@require_login
+def products(request):
     products = Product.objects.all()
-    context = {'products': products, 'cartItems': cartItems}
-    return render(request, 'store/store.html', context)
+    number_of_interactions = [Interaction.objects.filter(product=product).count() for product in products]
+
+    context = {'products': list(zip(products, number_of_interactions))}
+    return render(request, 'store/products.html', context)
 
 
-def cart(request):
-    data = cartData(request)
+@require_login
+def product_detail(request, product_id):
+    product = Product.objects.get(pk=product_id)
 
-    cartItems = data['cartItems']
-    order = data['order']
-    items = data['items']
+    Interaction.objects.get_or_create(product=product, user=request.user)
+    number_of_interactions = Interaction.objects.filter(product=product).count()
 
-    context = {'items': items, 'order': order, 'cartItems': cartItems}
-    return render(request, 'store/cart.html', context)
+    context = {'product': product, 'number_of_interactions': number_of_interactions}
 
-
-def checkout(request):
-    data = cartData(request)
-
-    cartItems = data['cartItems']
-    order = data['order']
-    items = data['items']
-
-    context = {'items': items, 'order': order, 'cartItems': cartItems}
-    return render(request, 'store/checkout.html', context)
+    return render(request, 'store/product_detail.html', context)
 
 
-def updateItem(request):
-    data = json.loads(request.body)
-    productId = data['productId']
-    action = data['action']
-    print('Action:', action)
-    print('Product:', productId)
+@require_login
+def add_product(request):
+    if request.method == 'GET':
+        return render(request, 'store/add_product.html', {'form': ProductForm()})
 
-    customer = request.user.customer
-    product = Product.objects.get(id=productId)
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
 
-    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+        if form.is_valid():
+            form.save()
+            return render(request, 'store/add_product.html', {'form': ProductForm(), 'message': 'Product added successfully', 'is_error': False})
+        else:
+            return render(request, 'store/add_product.html', {'form': form, 'message': form.errors, 'is_error': True})
 
-    if action == 'add':
-        orderItem.quantity = (orderItem.quantity + 1)
-    elif action == 'remove':
-        orderItem.quantity = (orderItem.quantity - 1)
-
-    orderItem.save()
-
-    if orderItem.quantity <= 0:
-        orderItem.delete()
-
-    update_click_count(product)
-
-    return JsonResponse('Item was added', safe=False)
-
-
-def processOrder(request):
-    transaction_id = datetime.datetime.now().timestamp()
-    data = json.loads(request.body)
-
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    else:
-        customer, order = guestOrder(request, data)
-
-    total = float(data['form']['total'])
-    order.transaction_id = transaction_id
-
-    if total == order.get_cart_total:
-        order.complete = True
-    order.save()
-
-    if order.shipping == True:
-        ShippingAddress.objects.create(
-            customer=customer,
-            order=order,
-            address=data['shipping']['address'],
-            city=data['shipping']['city'],
-            state=data['shipping']['state'],
-            zipcode=data['shipping']['zipcode'],
-        )
-
-    return JsonResponse('Payment submitted..', safe=False)
-
-
-
-def update_click_count(product):
-    product.click_count += 1
-    product.save()
-
-
-def update_star_rating(request):
-    data = json.loads(request.body)
-    productId = data['productId']
-    ratingValue = data['ratingValue']
-    
-    update_star_rating_in_database(productId, ratingValue)
-    
-    return JsonResponse({'success': True})
-
-
-def update_star_rating_in_database(productId, ratingValue):
-    product = Product.objects.get(id=productId)
-    product.star_rating = ratingValue
-    product.save()
+    return redirect('store:products')

@@ -19,9 +19,14 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+from customers import views as customer_views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('store.urls'))
+    path('', customer_views.signin),
+    path('customers/', include('customers.urls')),
+    path('store/', include('store.urls')),
+    path('recommendations/', include('recommendations.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

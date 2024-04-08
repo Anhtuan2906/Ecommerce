@@ -1,0 +1,37 @@
+{% extends "customers/base.html" %}
+
+{% block head %}
+{{ block.super }}
+<title>Register</title>
+{% endblock head %}
+
+{% block content %}
+{% load widget_tweaks %}
+<div class="login-page">
+    <div class="form">
+        <form class="register-form" action="" method="post">
+            {% csrf_token %}
+
+            {% if message|length > 0 %}
+            {% if is_error %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+            {% else %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+            {% endif %}
+            {% endif %}
+
+            {% render_field form.email placeholder="email" %}
+            {% render_field form.password placeholder="password" %}
+            {% render_field form.password2 placeholder="password confirmation" %}
+            {% render_field form.first_name placeholder="first name" %}
+            {% render_field form.last_name placeholder="last name" %}
+            <button type="submit">create</button>
+            <p class="message">Already registered? <a href="{% url 'customers:login' %}">Sign In</a></p>
+        </form>
+    </div>
+</div>
+{% endblock content %}

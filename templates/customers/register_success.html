@@ -1,0 +1,16 @@
+{% extends "customers/base.html" %}
+
+{% block head %}
+{{ block.super }}
+<title>Register</title>
+{% endblock head %}
+
+{% block content %}
+{% load widget_tweaks %}
+<div class="login-page">
+    <div class="form">
+        <p class="message" style="color: green; font-size: large;">You have successfully registered. </p>
+        <p class="message" style="color: green; font-size: large;">Back to <a href="{% url 'customers:login' %}"><b>Login</b></a></p>
+    </div>
+</div>
+{% endblock content %}

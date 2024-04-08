@@ -1,0 +1,39 @@
+{% extends 'store/navigation.html' %}
+
+{% load static %}
+
+{% block head %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="{% static 'css/products.css' %}">
+{% endblock head %}
+
+{% block content %}
+{% load widget_tweaks %}
+{{ block.super }}
+<div class="add-product-page">
+    <div class="form">
+        <form class="register-form" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% if message|length > 0 %}
+            {% if is_error %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+            {% else %}
+            <div class="alert alert-success" role="alert">
+                {{ message }}
+            </div>
+            {% endif %}
+            {% endif %}
+
+            {% render_field form.name placeholder="name" %}
+            {% render_field form.category placeholder="category" %}
+            {% render_field form.price placeholder="price" %}
+            {% render_field form.description placeholder="description" %}
+            {% render_field form.image placeholder="image URL" type="file"%}
+            <button type="submit">create</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}
