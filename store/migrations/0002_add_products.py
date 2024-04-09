@@ -14,7 +14,7 @@ def load_products_data(apps, schema_editor):
         data = json.load(file)
         for product in data:
             img_path = os.path.join(MEDIA_ROOT,"products","{}.jpg".format(
-                product["title"].title().replace(os.sep, "").replace(" ", "_")
+                product["title"].title().replace("/", "").replace("\\", "").replace(" ", "_")
             ))
             img_data = requests.get(product["image"]).content
             img = Image.open(BytesIO(img_data))
