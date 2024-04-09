@@ -1,4 +1,6 @@
+import os
+
 def get_image_path(instance, filename):
     ext = filename.split(".")[-1]
     filename = f"{instance}.{ext}"
-    return f"products/{filename}"
+    return "products" + os.sep + f"{filename}"

@@ -1,3 +1,4 @@
+import os
 import json
 import requests
 from io import BytesIO
@@ -9,12 +10,12 @@ from ecommerce.settings import MEDIA_ROOT
 
 def load_products_data(apps, schema_editor):
     Product = apps.get_model("store", "Product")
-    with open(MEDIA_ROOT + "/sample_products.json") as file:
+    with open(MEDIA_ROOT + os.sep + "sample_products.json") as file:
         data = json.load(file)
         for product in data:
-            img_path = MEDIA_ROOT + "/products/{}.jpg".format(
-                product["title"].title().replace("/", "").replace(" ", "_")
-            )
+            img_path = os.path.join(MEDIA_ROOT,"products","{}.jpg".format(
+                product["title"].title().replace(os.sep, "").replace(" ", "_")
+            ))
             img_data = requests.get(product["image"]).content
             img = Image.open(BytesIO(img_data))
             resized_img = img.resize((200, 200))
@@ -25,7 +26,7 @@ def load_products_data(apps, schema_editor):
                 category=product["category"],
                 price=round(product["price"], 2),
                 description=product["description"],
-                image=img_path.replace(MEDIA_ROOT + '/', ""),
+                image=img_path.replace(MEDIA_ROOT + os.sep, ""),
             )
 
 

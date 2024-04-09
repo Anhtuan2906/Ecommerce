@@ -1,3 +1,4 @@
+import os 
 import json
 from django.db import migrations
 
@@ -5,7 +6,7 @@ from ecommerce.settings import MEDIA_ROOT
 
 def load_users_data(apps, schema_editor):
     User = apps.get_model("auth", "User")
-    with open(MEDIA_ROOT + "/sample_users.json") as file:
+    with open(MEDIA_ROOT + os.sep + "sample_users.json") as file:
         data = json.load(file)
         for user in data:
             User.objects.create_user(
