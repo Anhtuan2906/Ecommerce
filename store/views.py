@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from ecommerce.utils import require_login
 from .models import *
 from .forms import ProductForm
-
+from .models import Product, Interaction
 
 @require_login
 def products(request):
@@ -41,3 +41,10 @@ def add_product(request):
             return render(request, 'store/add_product.html', {'form': form, 'message': form.errors, 'is_error': True})
 
     return redirect('store:products')
+
+
+@require_login
+def interaction_history(request):
+    user_interactions = Interaction.objects.filter(user=request.user)
+    context = {'user_interactions': user_interactions}
+    return render(request, 'store/interaction_history.html', context)

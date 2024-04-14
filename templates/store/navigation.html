@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
 {% block head %}
-<title>Ecommerse</title>
+<title>Ecommerce</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 {% endblock head %}
 
 {% block content %}
 {% load widget_tweaks %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid" style="background-color: #4f868c; color: white; font-weight: bolder; font-size: 18px;">
-        <a class="navbar-brand" href="{% url 'store:products' %}" style="color: white; font-weight: bold; font-size: 25px;"> Ecommerse </a>
+    <div class="container-fluid" style="background-color: #4f868c; color: white; font-weight: bolder; font-size: 20px;">
+        <a class="navbar-brand" href="{% url 'store:products' %}" style="color: white; font-weight: bold; font-size: 25px;"> Ecommerce </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -22,7 +22,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'recommendations:index' %}">Recommendation</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'store:interaction_history' %}">Interaction History</a>
+                </li>
             </ul>
+
             <form class="d-flex">
                 <a class="form-control me-2" style="background-color: yellow; text-decoration: none;" href="{% url 'customers:logout' %}"> Logout </a>
             </form>
