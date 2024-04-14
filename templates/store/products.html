@@ -35,9 +35,7 @@
                     {{ product.description }}.
                     {% endif %}
                 </p>
-                <p> No I
-
-                    nteractions: {{ no_interactions }} </p>
+                <p> No Interactions: {{ no_interactions }} </p>
                 <h5>${{ product.price }}</h5>
                 <a href="{% url 'store:product_detail' product.id %}" class="btn btn-primary"
                     style="background-color: #4f868c;">View</a>
