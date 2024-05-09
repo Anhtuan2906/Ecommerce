@@ -1,6 +1,6 @@
 {% extends 'store/navigation.html' %}
-
 {% load static %}
+{% load widget_tweaks %} 
 
 {% block head %}
 {{ block.super }}
@@ -8,31 +8,41 @@
 {% endblock head %}
 
 {% block content %}
-{% load widget_tweaks %}
 {{ block.super }}
 <div class="add-product-page">
     <div class="form">
         <form class="register-form" action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-
-            {% if message|length > 0 %}
-            {% if is_error %}
-            <div class="alert alert-danger" role="alert">
-                {{ message }}
-            </div>
-            {% else %}
-            <div class="alert alert-success" role="alert">
+            {% if message %}
+            <div class="alert {% if is_error %}alert-danger{% else %}alert-success{% endif %}" role="alert">
                 {{ message }}
             </div>
             {% endif %}
-            {% endif %}
-
-            {% render_field form.name placeholder="name" %}
-            {% render_field form.category placeholder="category" %}
-            {% render_field form.price placeholder="price" %}
-            {% render_field form.description placeholder="description" %}
-            {% render_field form.image placeholder="image URL" type="file"%}
-            <button type="submit">create</button>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                {% render_field form.name id="name" placeholder="Name" class+="form-control" %}
+            </div>
+            <div class="form-group">
+                <label for="categories">Categories:</label>
+                <select name="categories" id="categories" class="form-control" multiple>
+                    {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                {% render_field form.price id="price" placeholder="Price" class+="form-control" %}
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                {% render_field form.description id="description" placeholder="Description" class+="form-control" %}
+            </div>
+            <div class="form-group">
+                <label for="image">Image URL:</label>
+                {% render_field form.image id="image" placeholder="Image URL" type="file" class+="form-control-file" %}
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
         </form>
     </div>
 </div>

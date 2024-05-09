@@ -1,9 +1,7 @@
 import numpy as np
 from django.shortcuts import render
+from store.models import Product, Prediction
 
-from store.models import Product, Interaction, User
-
-# Create your views here.
 def index(request):
     np.random.seed(2107)
 
@@ -33,5 +31,9 @@ def index(request):
         'recommended_products_1': filter(lambda x: x[1] > 0, recommended_products_1),
         'recommended_products_2': filter(lambda x: x[1] > 0, recommended_products_2)
     }
+
+    # Save prediction results
+    for product, _ in recommended_products_1:
+        Prediction.objects.create(user=request.user, item_id=product.id, prediction_value=np.random.rand())
 
     return render(request, 'recommendations/index.html', context)

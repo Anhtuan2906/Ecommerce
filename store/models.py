@@ -1,12 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django_resized import ResizedImageField
-
 from .utils import get_image_path
 
 class Product(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False, unique=True)
-    category = models.CharField(max_length=200, null=False, blank=False)
+    categories = models.ManyToManyField('Category', related_name='products')
     price = models.FloatField(null=False, blank=False)
     description = models.TextField(max_length=1000, null=True, blank=True)
     image = ResizedImageField(size=[200, 200], quality=100, upload_to=get_image_path, null=False, blank=False, default='no_image.jpeg')
@@ -22,6 +21,15 @@ class Product(models.Model):
             url = ""
         return url
 
+    def save_prediction(self, user, item_id, prediction_value):
+        from .models import Prediction
+        Prediction.objects.create(user=user, item_id=item_id, prediction_value=prediction_value)
+
+class Category(models.Model):
+    name = models.CharField(max_length=200, unique=True)
+
+    def __str__(self):
+        return self.name
 
 class Interaction(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
@@ -33,3 +41,11 @@ class Interaction(models.Model):
         indexes = [
             models.Index(fields=['product', 'user']),
         ]
+
+class Prediction(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    item_id = models.IntegerField()
+    prediction_value = models.FloatField()
+
+    def __str__(self):
+        return f'Prediction for user {self.user.username} on item {self.item_id}'
