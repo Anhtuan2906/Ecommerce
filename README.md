@@ -12,4 +12,13 @@ make reset-db
 3. Run the server using the following command:
 ```bash
 make run
+`````````````````````````````````````````````````
+1. Activate virtual env:
+```bash
+workon ecommerce
+```
+
+2. Run server:
+```bash
+python manage.py runserver
 ```
