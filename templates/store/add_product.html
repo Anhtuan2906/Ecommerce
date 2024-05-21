@@ -1,49 +1,64 @@
 {% extends 'store/navigation.html' %}
 {% load static %}
-{% load widget_tweaks %} 
+{% load widget_tweaks %}
 
 {% block head %}
-{{ block.super }}
-<link rel="stylesheet" type="text/css" href="{% static 'css/products.css' %}">
-{% endblock head %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/products.css' %}" />
+{% endblock %}
 
 {% block content %}
-{{ block.super }}
-<div class="add-product-page">
+  {{ block.super }}
+  <div class="add-product-page">
     <div class="form">
-        <form class="register-form" action="" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% if message %}
-            <div class="alert {% if is_error %}alert-danger{% else %}alert-success{% endif %}" role="alert">
+      <form class="register-form" action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if message %}
+          <div class="alert {% if is_error %}alert-danger{% else %}alert-success{% endif %}" role="alert">
                 {{ message }}
             </div>
-            {% endif %}
-            <div class="form-group">
-                <label for="name">Name:</label>
-                {% render_field form.name id="name" placeholder="Name" class+="form-control" %}
-            </div>
-            <div class="form-group">
-                <label for="categories">Categories:</label>
-                <select name="categories" id="categories" class="form-control" multiple>
-                    {% for category in categories %}
-                    <option value="{{ category }}">{{ category }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="price">Price:</label>
-                {% render_field form.price id="price" placeholder="Price" class+="form-control" %}
-            </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                {% render_field form.description id="description" placeholder="Description" class+="form-control" %}
-            </div>
-            <div class="form-group">
-                <label for="image">Image URL:</label>
-                {% render_field form.image id="image" placeholder="Image URL" type="file" class+="form-control-file" %}
-            </div>
-            <button type="submit" class="btn btn-primary">Create</button>
-        </form>
+        {% endif %}
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control rounded-3 bg-light border border-1" name="name" id="name" placeholder="Input product name" />
+          </div>
+          {% comment %} {% render_field form.name id = 'name' placeholder = 'Name' = 'form-control' %} {% endcomment %}
+        </div>
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="categories" class="form-label">Categories</label>
+            <select name="categories" id="categories" class="form-select rounded-3 bg-light border border-1" style="min-height: 175px;" multiple="multiple">
+              {% for category in categories %}
+                <option value="{{ category }}">{{ category }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" class="form-control rounded-3 bg-light border border-1" name="price" id="price" placeholder="Input product price" />
+          </div>
+          {% comment %} {% render_field form.price id = 'price' placeholder = 'Price' = 'form-control' %} {% endcomment %}
+        </div>
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control rounded-3 bg-light border border-1" style="height: 100px" name="description" id="description" placeholder="Input product description"></textarea>
+          </div>
+          {% comment %} <label for="description">Description:</label>
+          {% render_field form.description id = 'description' placeholder = 'Description' = 'form-control' %} {% endcomment %}
+        </div>
+        <div class="form-group">
+          <div class="mb-2">
+            <label for="image" class="form-label">Image URL</label>
+            <input type="file" id="image" name="image" placeholder="Image Url" class="form-control-file rounded-3 bg-light border border-1" />
+            {% comment %} {% render_field form.image id = 'image' placeholder = 'Image URL' type = 'file' = 'form-control-file' %} {% endcomment %}
+          </div>
+        </div>
+        <button type="submit" class="btn btn-dark w-full rounded-pill">Create</button>
+      </form>
     </div>
-</div>
-{% endblock content %}
+  </div>
+{% endblock %}

@@ -3,45 +3,45 @@
 {% load static %}
 
 {% block head %}
-{{ block.super }}
-
-{% endblock head %}
+  {{ block.super }}
+{% endblock %}
 
 {% block content %}
-{{ block.super }}
-<div class="container">
+  {{ block.super }}
+  <div class="container">
     <div class="row">
-        {% for product, no_interactions in products %}
-        <div class="col-md-3 d-flex align-itemss-stretch" style="margin-bottom: 10px;">
-            <div class="card border border-4" style="padding: 12px; width: 100%">
-                <img src="{{ product.image_url }}" class="card-img-top border border-2" alt="{{ product.name }}"
-                    width="100%" height="225">
-                <h5 class="card-title" style="margin-top: 10px;">{{ product.name }}</h5>
-                <p>
-                    {% if product.category|length == 0 %}
-                    No category available.
-                    {% elif product.category|length > 30 %}
-                    {{ product.category|slice:":30" }}...
-                    {% else %}
-                    {{ product.category }}.
-                    {% endif %}
-                </p>
-                <p class="card-text">
-                    {% if product.description|length == 0 %}
-                    No description available.
-                    {% elif product.description|length > 30 %}
-                    {{ product.description|slice:":30" }}...
-                    {% else %}
-                    {{ product.description }}.
-                    {% endif %}
-                </p>
-                <p> No Interactions: {{ no_interactions }} </p>
-                <h5>${{ product.price }}</h5>
-                <a href="{% url 'store:product_detail' product.id %}" class="btn btn-primary"
-                    style="background-color: #4f868c;">View</a>
+      <h1 class="text-center my-5">Items List</h1>
+      {% for product, no_interactions in products %}
+        <div class="d-flex col-lg-3 col-md-4 col-sm-6 mb-4 px-3">
+          <div class="card rounded-3 p-3">
+            <img src="{{ product.image_url }}" alt="{{ product.name }}" class="card-img-top mb-2 img-fluid rounded-2 w-100" />
+            <div class="card-body p-2">
+              <h6 class="card-title text-truncate">{{ product.name }}</h6>
+              <p class="text-truncate small">
+                {% if product.category|length == 0 %}
+                  No Category Yet
+                {% else %}
+                  {{ product.category }}
+                {% endif %}
+              </p>
+              <hr />
+              <p class="card-text text-truncate">
+                {% if product.description|length == 0 %}
+                  No description yet.
+                {% else %}
+                  {{ product.description }}.
+                {% endif %}
+              </p>
+              <p class="small">No. Interactions: {{ no_interactions }}</p>
+              <hr />
+              <div class="d-flex justify-content-between align-items-center">
+                <a href="{% url 'store:product_detail' product.id %}" class="btn btn-outline-dark rounded-pill w-50">View</a>
+                <p class="mb-0">${{ product.price }}</p>
+              </div>
             </div>
+          </div>
         </div>
-        {% endfor %}
+      {% endfor %}
     </div>
-</div>
-{% endblock content %}
+  </div>
+{% endblock %}

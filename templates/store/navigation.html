@@ -1,36 +1,36 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 
 {% block head %}
-<title>Ecommerce</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
-{% endblock head %}
+  <title>Ecommerce</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+{% endblock %}
 
 {% block content %}
-{% load widget_tweaks %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid" style="background-color: #4f868c; color: white; font-weight: bolder; font-size: 20px;">
-        <a class="navbar-brand" href="{% url 'store:products' %}" style="color: white; font-weight: bold; font-size: 25px;"> Ecommerce </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'store:add_product' %}">Add Product</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'recommendations:index' %}">Recommendation</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'store:interaction_history' %}">Interaction History</a>
-                </li>
-            </ul>
-
-            <form class="d-flex">
-                <a class="form-control me-2" style="background-color: yellow; text-decoration: none;" href="{% url 'customers:logout' %}"> Logout </a>
-            </form>
+  {% load widget_tweaks %}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-xl">
+      <!-- Logo -->
+      <a class="navbar-brand" href="{% url 'store:products' %}"><h3 class="fw-bold text-white pt-2" style="font-family: Garamond">Ecommerce.</h3></a>
+      <!-- Navbar toggle -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <!-- Collapse -->
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <!-- Nav -->
+        <div class="navbar-nav mx-lg-auto fw-bold gap-4">
+          <a class="nav-item nav-link fs-6" href="{% url 'store:products' %}" aria-current="page">Home</a>
+          <a class="nav-item nav-link fs-6" href="{% url 'store:add_product' %}">Add Product</a>
+          <a class="nav-item nav-link fs-6" href="{% url 'recommendations:index' %}">Recommendation</a>
+          <a class="nav-item nav-link fs-6" href="{% url 'store:interaction_history' %}">Interaction History</a>
         </div>
+        <!-- Right navigation -->
+        {% comment %} <div class="navbar-nav ms-lg-4">
+          <a class="nav-item nav-link" href="#">Sign in</a>
+        </div> {% endcomment %}
+        <!-- Action -->
+        <div class="d-flex align-items-lg-center mt-3 mt-lg-0">
+          <a href="{% url 'customers:logout' %}" class="btn btn-sm rounded-pill btn-light w-full w-lg-auto px-4 py-2 fs-6">Logout</a>
+        </div>
+      </div>
     </div>
-</nav>
-{% endblock content %}
+  </nav>
+{% endblock %}

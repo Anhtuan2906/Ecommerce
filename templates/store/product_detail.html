@@ -3,32 +3,43 @@
 {% load static %}
 
 {% block head %}
-{{ block.super }}
-
-{% endblock head %}
+  {{ block.super }}
+{% endblock %}
 
 {% block content %}
-{{ block.super }}
-<div class="container">
+  {{ block.super }}
+  <div class="container my-5 border shadow-sm rounded-3 p-5">
     <div class="row">
-        <div class="col">
-            <img src="{{ product.image_url }}" class="card-img-top border border-2" alt="{{ product.name }}"
-                width="100%">
-        </div>
-        <div class="col">
-            <h5 class="card-title">{{ product.name }}</h5>
-            <p> Name: {{ product.category }}</p>
+      <div class="col-md-5 d-flex justify-content-center align-items-center">
+        <img src="{{ product.image_url }}" class="card-img-top w-75 me-5" alt="{{ product.name }}" />
+      </div>
+      <div class="col-md-7 d-flex align-items-center">
+        <div>
+          <p class="fw-bold">
+            Category: <span>
+              {% if product.category|length == 0 %}
+                No Category Yet
+              {% else %}
+                {{ product.category }}
+              {% endif %}
+            </span>
+          </p>
+          <h4 class="card-title text-dark mb-4">{{ product.name }}</h4>
+          <h5 class="fw-bold text-dark">${{ product.price }}</h5>
+          <div class="row mt-4">
+            <p class="fw-bold">Product Details:</p>
             <p class="card-text">
-                Description:
-                {% if product.description|length == 0 %}
+              {% if product.description|length == 0 %}
                 No description available.
-                {% else %}
+              {% else %}
                 {{ product.description }}
-                {% endif %}
+              {% endif %}
             </p>
-            <p> Number of Interations: {{ number_of_interactions }}</p>
-            <h5> Price: ${{ product.price }}</h5>
+          </div>
+          <p class="my-4 fst-italic">Number of Interactions: {{ number_of_interactions }}</p>
+          <button onclick="history.back()" class="btn btn-outline-dark rounded-pill px-4">Return to list</button>
         </div>
+      </div>
     </div>
-</div>
-{% endblock content %}
+  </div>
+{% endblock %}
