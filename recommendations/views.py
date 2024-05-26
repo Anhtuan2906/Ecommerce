@@ -1,39 +1,49 @@
 import numpy as np
 from django.shortcuts import render
 from store.models import Product, Prediction
+from recommendations.models import ProductFeaturesVector, UserFeaturesVector
 
 def index(request):
-    np.random.seed(2107)
+    # Retrieve all user feature vectors
+    user_feature_vectors = UserFeaturesVector.objects.all()
+    if not user_feature_vectors.exists():
+        return render(request, 'recommendations/index.html', {'error': 'No user feature vectors found'})
 
-    products = Product.objects.all()
-    no_recommended_1 = np.random.randint(0, 2, len(products)) * np.random.randint(0, 20, len(products))
-    no_recommended_2 = no_recommended_1.copy()
+    user_ids = [ufv.user_id.id for ufv in user_feature_vectors]
+    user_matrix = np.array([np.fromstring(ufv.feature_vector.strip('[]'), sep=',') for ufv in user_feature_vectors])
 
-    recommended_products_1 = [list(e) for e in zip(products, no_recommended_1)]
-    recommended_products_1.sort(key=lambda x: x[1], reverse=True)
+    # Retrieve all product feature vectors
+    product_feature_vectors = ProductFeaturesVector.objects.all()
+    if not product_feature_vectors.exists():
+        return render(request, 'recommendations/index.html', {'error': 'No product feature vectors found'})
 
-    recommended_products_2 = [list(e) for e in zip(products, no_recommended_2)]
-    recommended_products_2.sort(key=lambda x: x[1], reverse=True)
+    product_ids = [pfv.product_id.id for pfv in product_feature_vectors]
+    product_matrix = np.array([np.fromstring(pfv.feature_vector.strip('[]'), sep=',') for pfv in product_feature_vectors])
 
-    min_no_recommended = 2
-    n = len(recommended_products_2)
-    for r in range(n - 1, -1, -1):
-        if recommended_products_2[r][1] < min_no_recommended:
-            while recommended_products_2[r][1] < min_no_recommended:
-                l = np.random.randint(0, r)
-                if recommended_products_2[l][1] > min_no_recommended:
-                    recommended_products_2[l][1] -= 1
-                    recommended_products_2[r][1] += 1
+    # Debugging prints
+    print(f"User Matrix Shape: {user_matrix.shape}")
+    print(f"Product Matrix Shape: {product_matrix.shape}")
 
-    recommended_products_2.sort(key=lambda x: x[1], reverse=True)
+    # Ensure the matrices can be multiplied
+    if user_matrix.shape[1] != product_matrix.shape[1]:
+        raise ValueError("User and product feature vectors must have the same length")
 
+    # Multiply the user matrix by the product matrix
+    interaction_matrix = np.dot(user_matrix, product_matrix.T)
+
+    # Debugging prints
+    print(f"Interaction Matrix Shape: {interaction_matrix.shape}")
+
+    # Dummy context for demonstration purposes
     context = {
-        'recommended_products_1': filter(lambda x: x[1] > 0, recommended_products_1),
-        'recommended_products_2': filter(lambda x: x[1] > 0, recommended_products_2)
+        'interaction_matrix': interaction_matrix,
+        'user_ids': user_ids,
+        'product_ids': product_ids,
     }
 
-    # Save prediction results
-    for product, _ in recommended_products_1:
-        Prediction.objects.create(user=request.user, item_id=product.id, prediction_value=np.random.rand())
+    # Save prediction results (example with dummy predictions)
+    for user_id, user_vector in zip(user_ids, interaction_matrix):
+        for product_id, prediction_value in zip(product_ids, user_vector):
+            Prediction.objects.create(user_id=user_id, item_id=product_id, prediction_value=prediction_value)
 
     return render(request, 'recommendations/index.html', context)
