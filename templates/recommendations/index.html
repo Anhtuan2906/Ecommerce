@@ -16,20 +16,25 @@
           <h1>Fairness recommendations System</h1>
           <form method="post" action="">
             {% csrf_token %}
+            {% if message %}
+              <div class="alert {% if is_error %}alert-danger{% else %}alert-success{% endif %}" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
             <div class="row py-3">
               <div class="col-6" style="text-align: end; !important">
                 <label for="id_no_recomend_item" class="col-form-label">No. Recommend Items:</label>
               </div>
               <div class="col-auto">
-                <input type="number" class="form-control" id="id_no_recomend_item" name="no_recomend_item" />
+                <input type="number" class="form-control" id="id_no_recomend_item" name="k" />
               </div>
             </div>
             <div class="row py-3">
               <div class="col-6" style="text-align: end; !important">
-                <label for="id_max_exposure" class="col-form-label">Min Exposure:</label>
+                <label for="id_group_proportions" class="col-form-label">Item group Proportions (x%):</label>
               </div>
               <div class="col-auto">
-                <input type="number" class="form-control" id="id_max_exposure" name="max_exposure" />
+                <input type="number" class="form-control" id="id_group_proportions" name="p" />
               </div>
             </div>
             <button type="submit" class="btn btn-dark rounded-pill px-4 py-2 mt-2">Recommend</button>
@@ -66,7 +71,7 @@
                         {{ product.description }}.
                       {% endif %}
                     </p>
-                    <p class="small">No. Interactions: {{ no_interactions }}</p>
+                    <p class="small">No. Recommened: {{ no_recommended }}</p>
                     <hr />
                     <div class="d-flex justify-content-between align-items-center">
                       <a href="{% url 'store:product_detail' product.id %}" class="btn btn-outline-dark rounded-pill w-50">View</a>
@@ -104,7 +109,7 @@
                         {{ product.description }}.
                       {% endif %}
                     </p>
-                    <p class="small">No. Interactions: {{ no_interactions }}</p>
+                    <p class="small">No. Recommened: {{ no_recommended }}</p>
                     <hr />
                     <div class="d-flex justify-content-between align-items-center">
                       <a href="{% url 'store:product_detail' product.id %}" class="btn btn-outline-dark rounded-pill w-50">View</a>

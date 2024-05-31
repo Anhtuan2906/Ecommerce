@@ -8,3 +8,4 @@ python-dotenv
 sentence_transformers
 torch
 mip
+ortools
