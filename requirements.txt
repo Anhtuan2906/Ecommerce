@@ -4,3 +4,7 @@ django
 django-bootstrap-v5
 django-widget-tweaks
 django-resized
+python-dotenv
+sentence_transformers
+torch
+mip

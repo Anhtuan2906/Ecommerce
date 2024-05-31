@@ -1,7 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django_resized import ResizedImageField
+
+
 from .utils import get_image_path
+
 
 class Product(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False, unique=True)
@@ -43,9 +46,17 @@ class Interaction(models.Model):
         ]
 
 class Prediction(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    item_id = models.IntegerField()
-    prediction_value = models.FloatField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    prediction_value = models.FloatField(default=0)
 
     def __str__(self):
         return f'Prediction for user {self.user.username} on item {self.item_id}'
+
+class OriginalPrediction(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    prediction_value = models.FloatField(default=0)
+
+    def __str__(self):
+        return f'Original prediction for user {self.user.username} on item {self.item_id}'

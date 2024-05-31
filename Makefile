@@ -9,6 +9,7 @@ reset-db:
 	rm -rf db.sqlite3
 
 	mkdir media/products
+	python3 manage.py makemigrations recommendations
 	python3 manage.py makemigrations customers
 	python3 manage.py makemigrations store
 	python3 manage.py migrate

@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('store', '0004_category_remove_product_category_product_categories'),
     ]

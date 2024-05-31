@@ -1,8 +1,12 @@
 import json
 from django.shortcuts import render, redirect
-from .models import Product, Interaction, Prediction
-from .forms import ProductForm
 from django.contrib.auth.decorators import login_required
+
+from .forms import ProductForm
+from .utils import extract_product_feature
+from .models import Product, Interaction, Prediction
+from recommendations.models import ProductFeaturesVector
+
 
 @login_required
 def products(request):
@@ -30,21 +34,11 @@ def add_product(request):
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
             product = form.save()
-            product.save_prediction(user=request.user, item_id=product.id, prediction_value=0.9)
+            product_feature = extract_product_feature(product)
+
+            product_feature = json.dumps(product_feature.tolist())
+            ProductFeaturesVector.objects.create(product_id=product, feature_vector=product_feature)
             return render(request, 'store/add_product.html', {'form': ProductForm(), 'message': 'Product added successfully', 'is_error': False})
         else:
             return render(request, 'store/add_product.html', {'form': form, 'message': form.errors, 'is_error': True})
     return redirect('store:products')
-
-@login_required
-def interaction_history(request):
-    user_interactions = Interaction.objects.filter(user=request.user)
-    user_predictions = Prediction.objects.filter(user=request.user)
-    recommended_products = [(pred.item_id, pred.prediction_value) for pred in user_predictions]
-    
-    context = {
-        'user_interactions': user_interactions,
-        'user_predictions': user_predictions,
-        'recommended_products': recommended_products
-    }
-    return render(request, 'store/interaction_history.html', context)
