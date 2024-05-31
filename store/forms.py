@@ -1,5 +1,6 @@
 from django import forms
-from .models import Product
+
+from .models import Product, Category
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -12,6 +13,11 @@ class ProductForm(forms.ModelForm):
     def clean_description(self):
         return self.cleaned_data['description'].strip().capitalize()
 
-    def clean_category(self):
-        categories = self.cleaned_data['categories']
-        return ','.join(categories) if categories else ''
+    # def clean_category(self):
+    #     categories = []
+    #     for category in self.cleaned_data['categories']:
+    #         if not Category.objects.filter(name=category).exists():
+    #             raise forms.ValidationError(f"{category} is not a valid category")
+    #         categories.append(Category.objects.get(name=category))
+    #     self.cleaned_data['categories'] = categories
+    #     return self.cleaned_data['categories']

@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import ProductForm
 from .utils import extract_product_feature
-from .models import Product, Interaction, Prediction
+from .models import Product, Interaction, Category
 from recommendations.models import ProductFeaturesVector
 
 
@@ -25,19 +25,26 @@ def product_detail(request, product_id):
 
 @login_required
 def add_product(request):
+    categories = Category.objects.all()
+    categories = [category.name for category in categories]
+
     if request.method == 'GET':
-        with open('media/categories.json') as f:
-            categories = json.load(f)
         return render(request, 'store/add_product.html', {'form': ProductForm(), 'categories': categories})
     if request.method == 'POST':
-        form = ProductForm(request.POST, request.FILES)
+        data = request.POST.copy()
+        categories_db = []
+        for category in data.getlist('categories'):
+            category_db = Category.objects.get(name=category)
+            categories_db.append(category_db)
+        data.setlist('categories', categories_db)  
+        form = ProductForm(data, request.FILES)
         if form.is_valid():
             product = form.save()
             product_feature = extract_product_feature(product)
 
             product_feature = json.dumps(product_feature.tolist())
             ProductFeaturesVector.objects.create(product_id=product, feature_vector=product_feature)
-            return render(request, 'store/add_product.html', {'form': ProductForm(), 'message': 'Product added successfully', 'is_error': False})
+            return render(request, 'store/add_product.html', {'form': ProductForm(), 'message': 'Product added successfully', 'is_error': False, 'categories': categories})
         else:
-            return render(request, 'store/add_product.html', {'form': form, 'message': form.errors, 'is_error': True})
+            return render(request, 'store/add_product.html', {'form': form, 'message': form.errors, 'is_error': True, 'categories': categories})
     return redirect('store:products')
