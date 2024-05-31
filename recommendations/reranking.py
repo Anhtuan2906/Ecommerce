@@ -2,7 +2,7 @@ import numpy as np
 import cvxpy as cp
 from tqdm import trange
 from mip import Model, xsum, maximize
-from ortools.linear_solver import pywraplp\
+from ortools.linear_solver import pywraplp
 
 
 def normalize(S: np.ndarray, base_val: float = 0) -> np.ndarray:
