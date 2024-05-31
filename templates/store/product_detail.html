@@ -17,11 +17,15 @@
         <div>
           <p class="fw-bold">
             Category: <span>
-              {% if product.category|length == 0 %}
-                No Category Yet
-              {% else %}
-                {{ product.category }}
-              {% endif %}
+              {% if product.categories.all|length == 0 %}
+                  No Category Yet
+                {% else %}
+                  {% if product.categories.all|length > 2 %}
+                    {{ product.categories.all.2 }}
+                  {% else %}
+                    {{ product.categories.all.0 }}
+                  {% endif %}
+                {% endif %}
             </span>
           </p>
           <h4 class="card-title text-dark mb-4">{{ product.name }}</h4>

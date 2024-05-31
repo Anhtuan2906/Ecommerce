@@ -101,7 +101,8 @@ def index(request):
         print(f"Interaction Matrix Shape: {interaction_matrix.shape}")
         print(f"Decision Matrix Shape: {decision_matrix.shape}")
         print(f"Reranked Decision Matrix Shape: {reranked_decision_matrix.shape}")
-
+        if not is_error:
+            message = "Prediction results saved successfully"
     context = {
         "is_error": is_error,
         "message": message,

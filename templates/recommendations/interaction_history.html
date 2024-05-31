@@ -18,10 +18,14 @@
             <div class="card-body p-2">
               <h6 class="card-title text-truncate">{{ interaction.product.name }}</h6>
               <p class="text-truncate small">
-                {% if interaction.product.category|length == 0 %}
+                {% if interaction.product.categories.all|length == 0 %}
                   No Category Yet
                 {% else %}
-                  {{ interaction.product.category }}
+                  {% if interaction.product.categories.all|length > 2 %}
+                    {{ interaction.product.categories.all.2 }}
+                  {% else %}
+                    {{ interaction.product.categories.all.0 }}
+                  {% endif %}
                 {% endif %}
               </p>
               <hr />
@@ -58,10 +62,14 @@
                   <div class="card-body p-2">
                     <h6 class="card-title text-truncate">{{ product.name }}</h6>
                     <p class="text-truncate small">
-                      {% if product.category|length == 0 %}
+                      {% if interaction.product.categories.all|length == 0 %}
                         No Category Yet
                       {% else %}
-                        {{ product.category }}
+                        {% if interaction.product.categories.all|length > 2 %}
+                          {{ interaction.product.categories.all.2 }}
+                        {% else %}
+                          {{ interaction.product.categories.all.0 }}
+                        {% endif %}
                       {% endif %}
                     </p>
                     <hr />
@@ -96,10 +104,10 @@
                   <div class="card-body p-2">
                     <h6 class="card-title text-truncate">{{ product.name }}</h6>
                     <p class="text-truncate small">
-                      {% if product.category|length == 0 %}
+                      {% if product.categories|length == 0 %}
                         No Category Yet
                       {% else %}
-                        {{ product.category }}
+                        {{ product.categcategoriesory }}
                       {% endif %}
                     </p>
                     <hr />
