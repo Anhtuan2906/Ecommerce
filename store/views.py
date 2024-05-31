@@ -18,7 +18,6 @@ def products(request):
 @login_required
 def product_detail(request, product_id):
     product = Product.objects.get(pk=product_id)
-    product.save_prediction(user=request.user, item_id=product_id, prediction_value=0.8)
     Interaction.objects.get_or_create(product=product, user=request.user)
     number_of_interactions = Interaction.objects.filter(product=product).count()
     context = {'product': product, 'number_of_interactions': number_of_interactions}
